@@ -1,0 +1,12 @@
+theme = catppuccin-macchiato
+shell-integration = zsh
+font-size = 24
+font-feature = -calt
+font-feature = -dlig
+font-feature = -liga
+window-height = 48
+window-width = 128
+# fullscreen = true
+# font-family = JetBrainsMono Nerd Font
+# shell-integration-features = no-cursor
+
