@@ -17,41 +17,41 @@ CONFIG_PATH_GHOSTTY := $(CONFIG)/ghostty/$(NAME_GHOSTTY_CONFIG)
 
 install:
 	@ echo "-> Installing..."
-	@ $(MAKE) install_zsh
-	@ $(MAKE) install_git
-	@ $(MAKE) install_tmux
-	@ $(MAKE) install_neovim
-	@ $(MAKE) install_ghostty
+	@ $(MAKE) -s install_zsh
+	@ $(MAKE) -s install_git
+	@ $(MAKE) -s install_tmux
+	@ $(MAKE) -s install_neovim
+	@ $(MAKE) -s install_ghostty
 	@ echo "<- Installation has been successfully"
 
 install_zsh:
 	@ echo "  -> Installing zsh config..."
-	@ $(MAKE) move_files MOVE_SRC=$(CONFIG_PATH_ZSH) MOVE_DST=$(OLD)/zsh/
-	@ $(MAKE) link_files LINK_SRC=$(CONFIG_PATH_ZSH) LINK_DST=$(PWD)/zsh/$(NAME_ZSH_RC)
+	@ $(MAKE) -s move_files MOVE_SRC=$(CONFIG_PATH_ZSH) MOVE_DST=$(OLD)/zsh/
+	@ $(MAKE) -s link_files LINK_SRC=$(CONFIG_PATH_ZSH) LINK_DST=$(PWD)/zsh/$(NAME_ZSH_RC)
 	@ echo "  <- zsh config has been installed successfully"
 
 install_git:
 	@ echo "  -> Installing git config..."
-	@ $(MAKE) move_files MOVE_SRC=$(CONFIG_PATH_GIT) MOVE_DST=$(OLD)/git/
-	@ $(MAKE) link_files LINK_SRC=$(CONFIG_PATH_GIT) LINK_DST=$(PWD)/git/$(NAME_GIT_CONFIG)
+	@ $(MAKE) -s move_files MOVE_SRC=$(CONFIG_PATH_GIT) MOVE_DST=$(OLD)/git/
+	@ $(MAKE) -s link_files LINK_SRC=$(CONFIG_PATH_GIT) LINK_DST=$(PWD)/git/$(NAME_GIT_CONFIG)
 	@ echo "  <- git config has been installed successfully"
 
 install_tmux:
 	@ echo "  -> Installing tmux config..."
-	@ $(MAKE) move_files MOVE_SRC=$(CONFIG_PATH_TMUX) MOVE_DST=$(OLD)/tmux/
-	@ $(MAKE) link_files LINK_SRC=$(CONFIG_PATH_TMUX) LINK_DST=$(PWD)/tmux/$(NAME_TMUX_CONFIG)
+	@ $(MAKE) -s move_files MOVE_SRC=$(CONFIG_PATH_TMUX) MOVE_DST=$(OLD)/tmux/
+	@ $(MAKE) -s link_files LINK_SRC=$(CONFIG_PATH_TMUX) LINK_DST=$(PWD)/tmux/$(NAME_TMUX_CONFIG)
 	@ echo "  <- tmux config has been installed successfully"
 
 install_neovim:
 	@ echo "  -> Installing neovim config..."
-	@ $(MAKE) move_files MOVE_SRC=$(CONFIG_PATH_NEOVIM) MOVE_DST=$(OLD)/nvim
-	@ $(MAKE) link_files LINK_SRC=$(CONFIG_PATH_NEOVIM) LINK_DST=$(PWD)/nvim
+	@ $(MAKE) -s move_files MOVE_SRC=$(CONFIG_PATH_NEOVIM) MOVE_DST=$(OLD)/nvim
+	@ $(MAKE) -s link_files LINK_SRC=$(CONFIG_PATH_NEOVIM) LINK_DST=$(PWD)/nvim
 	@ echo "  <- neovim config has been installed successfully"
 
 install_ghostty:
 	@ echo "  -> Installing ghostty config..."
-	@ $(MAKE) move_files MOVE_SRC=$(CONFIG_PATH_GHOSTTY) MOVE_DST=$(OLD)/ghostty/
-	@ $(MAKE) link_files LINK_SRC=$(CONFIG_PATH_GHOSTTY) LINK_DST=$(PWD)/ghostty/$(NAME_GHOSTTY_CONFIG)
+	@ $(MAKE) -s move_files MOVE_SRC=$(CONFIG_PATH_GHOSTTY) MOVE_DST=$(OLD)/ghostty/
+	@ $(MAKE) -s link_files LINK_SRC=$(CONFIG_PATH_GHOSTTY) LINK_DST=$(PWD)/ghostty/$(NAME_GHOSTTY_CONFIG)
 	@ echo "  <- ghostty config has been installed successfully"
 
 move_files:
@@ -65,7 +65,7 @@ link_files:
 clean_backup:
 	@ rm -rf $(OLD)
 
-print:
+debug:
 	@ echo "Config"
 	@ echo " pwd: $(PWD)"
 	@ echo " home: $(HOME)"
