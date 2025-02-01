@@ -22,3 +22,4 @@ export EDITOR='nvim'
 export PATH=$PATH:/usr/local/go/bin:$HOME/work/golang/bin
 export GOPATH=$HOME/work/golang
 
+alias e='nvim'
