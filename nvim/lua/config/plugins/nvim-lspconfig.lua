@@ -1,11 +1,11 @@
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
-		{ "williamboman/mason.nvim", config = true },
-		"williamboman/mason-lspconfig.nvim",
+		{ "mason-org/mason.nvim", opts = {} },
+		"mason-org/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		{ "j-hui/fidget.nvim", opts = {} },
-		"hrsh7th/cmp-nvim-lsp",
+		"saghen/blink.cmp",
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -63,11 +63,18 @@ return {
 					{ "n", "x" },
 					"<leader>ca",
 					vim.lsp.buf.code_action,
-					{ buffer = event.buf, desc = "[c]ode [a]ction" }
+					{ buffer = event.buf, desc = "[g]oto [a]ction" }
 				)
 
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
-				if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+				if
+					client
+					and client.supports_method(
+						client,
+						vim.lsp.protocol.Methods.textDocument_documentHighlight,
+						event.buf
+					)
+				then
 					local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
 					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 						buffer = event.buf,
@@ -90,7 +97,10 @@ return {
 					})
 				end
 
-				if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+				if
+					client
+					and client.supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf)
+				then
 					local inlay_hints = function()
 						vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
 					end
@@ -103,6 +113,33 @@ return {
 					)
 				end
 			end,
+		})
+
+		vim.diagnostic.config({
+			severity_sort = true,
+			float = { border = "rounded", source = "if_many" },
+			underline = { severity = vim.diagnostic.severity.ERROR },
+			signs = vim.g.have_nerd_font and {
+				text = {
+					[vim.diagnostic.severity.ERROR] = "󰅚 ",
+					[vim.diagnostic.severity.WARN] = "󰀪 ",
+					[vim.diagnostic.severity.INFO] = "󰋽 ",
+					[vim.diagnostic.severity.HINT] = "󰌶 ",
+				},
+			} or {},
+			virtual_text = {
+				source = "if_many",
+				spacing = 2,
+				format = function(diagnostic)
+					local diagnostic_message = {
+						[vim.diagnostic.severity.ERROR] = diagnostic.message,
+						[vim.diagnostic.severity.WARN] = diagnostic.message,
+						[vim.diagnostic.severity.INFO] = diagnostic.message,
+						[vim.diagnostic.severity.HINT] = diagnostic.message,
+					}
+					return diagnostic_message[diagnostic.severity]
+				end,
+			},
 		})
 
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -138,6 +175,9 @@ return {
 			ensure_installed = ensure_installed,
 		})
 		require("mason-lspconfig").setup({
+			automatic_enable = true,
+			ensure_installed = {},
+			automatic_installation = false,
 			handlers = {
 				function(server_name)
 					local server = servers[server_name] or {}
