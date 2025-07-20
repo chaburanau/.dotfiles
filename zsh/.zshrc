@@ -15,11 +15,11 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+alias e='nvim'
 
 export LANG=en_US.UTF-8
 export EDITOR='nvim'
 
-export PATH=$PATH:/usr/local/go/bin:$HOME/work/golang/bin
-export GOPATH=$HOME/work/golang
+export PATH=$PATH:/usr/local/go/bin:$HOME/.golang/bin
+export GOPATH=$HOME/.golang
 
-alias e='nvim'

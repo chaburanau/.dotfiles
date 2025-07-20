@@ -1,14 +1,22 @@
-[init]
-	defaultBranch = main
 [user]
 	email = chaburanau@proton.me
 	name = Yauheni Chaburanau
+[init]
+	defaultBranch = main
 [commit]
 	gpgSign = true
+
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
 [url "ssh://git@gitlab.com/"]
 	insteadOf = https://gitlab.com/
 [url "ssh://git@bitbucket.org/"]
 	insteadOf = https://bitbucket.org/
+
+[includeIf "gitdir:~/sources/work/"]
+	path = ~/.config/git/work
+[includeIf "gitdir:~/sources/home/"]
+	path = ~/.config/git/home
+[includeIf "gitdir:~/.golang/"]
+	path = ~/.config/git/golang
 
