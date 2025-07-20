@@ -29,7 +29,8 @@ vim.schedule(function()
 end)
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open [D]iagnostic [Q]uickfix list" })
+vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, { desc = "Open [D]iagnostic [F]loating info" })
 
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
@@ -115,6 +116,7 @@ require("lazy").setup({
 				{ "<leader>s", group = "[S]earch" },
 				{ "<leader>t", group = "[T]oggle" },
 				{ "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
+				{ "<leader>d", group = "[D]iagnostic" },
 			},
 		},
 	},
